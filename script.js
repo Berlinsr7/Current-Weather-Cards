@@ -32,7 +32,7 @@ fetch('https://restcountries.com/v3.1/all')
         <p class="card-text text-light">Capital: ${capital}</p>
         <p class="card-text text-light">Region: ${region}</p>
         <p class="card-text text-light">Country Code: ${code}</p>
-        <a href="" onclick="weather(event)" class="btn btn-outline-light">Click for Weather</a>`;
+        <a href="" onclick="getweather('${name}')" class="btn btn-outline-light">Click for Weather</a>`;
 
         card.append(cardHead,cardBody);
         column1.append(card);
@@ -42,5 +42,17 @@ fetch('https://restcountries.com/v3.1/all')
 })
 .catch(err => console.log(err));
 
-
-
+function getweather(countryName) {
+    var apiKey = 'df643041706669103109616cff23838b'; 
+    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${countryName}&appid=${apiKey}&units=metric`;
+    var icon = `https://openweathermap.org/img/wn/10d@2x.png`
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(weatherData => {
+        alert(`Weather in ${countryName}: ${weatherData.weather[0].description}, Temperature: ${weatherData.main.temp}°C`);
+      })
+      .catch(error => {
+        console.log('Error fetching weather data:', error);
+      });
+      alert(`This is ${countryName}`);
+  }
